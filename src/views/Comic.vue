@@ -1,0 +1,81 @@
+<script setup>
+import { ref } from 'vue'
+import Story from '@/components/Story.vue'
+
+const randomInt = (min, max) => Math.round(Math.random() * (max - min)) + min
+const IMG_URL = 'http://iph.href.lu/800x600?fg=666666&bg=cccccc'
+
+const current = 3
+const data = ref([])
+const raw = [
+  {
+    link: IMG_URL,
+    text: 'text'
+  },
+  {
+    link: IMG_URL,
+    text: 'text'
+  },
+  {
+    link: IMG_URL,
+    text: 'text'
+  },
+  {
+    link: IMG_URL,
+    text: 'text'
+  },
+  {
+    link: IMG_URL,
+    text: 'text'
+  },
+  {
+    link: IMG_URL,
+    text: 'text'
+  },
+  {
+    link: IMG_URL,
+    text: 'text'
+  },
+  {
+    link: IMG_URL,
+    text: 'text'
+  },
+  {
+    link: IMG_URL,
+    text: 'text'
+  }
+]
+raw.forEach((item) => (item.location = randomInt(1, 4)))
+setTimeout(() => {
+  data.value = raw
+}, 100)
+</script>
+
+<template>
+  <div class="desktop">
+    <div class="relative">
+      <div class="desktop__phone">
+        <Story :data="data" :current="current" />
+      </div>
+    </div>
+  </div>
+</template>
+
+<style lang="postcss">
+.desktop {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+}
+.desktop__phone {
+  padding: 0;
+  border: 8px solid #333;
+  border-radius: 32px;
+  overflow: hidden;
+  width: 375px;
+  height: 720px;
+}
+</style>

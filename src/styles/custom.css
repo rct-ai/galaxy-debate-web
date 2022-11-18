@@ -1,5 +1,14 @@
 #app {
-  --el-color-primary: #f3b922;
+  --color-brand: #f3b922;
+  --color-brand-rgb: 243, 185, 34;
+  --color-brand-active: var(--color-brand);
+  --color-brand-disabled: rgba(var(--color-brand-rgb), 0.5);
+  --color-primary: #fff;
+  --color-secondary: #000;
+  --color-secondary-icon: #070911;
+  --color-secondary-text: #0e1418;
+
+  --el-color-primary: var(--color-brand);
   --el-text-color-primary: #fff;
   .el-button.el-button--primary,
   .el-dialog__headerbtn {
