@@ -14,9 +14,9 @@ const selected = ref('')
 const voted = ref(false)
 
 const avatars = {
-  Biden: '/Biden.png',
-  Trump: '/Trump.png',
-  Obama: '/Obama.png'
+  Richard: '/Biden.png',
+  Michael: '/Trump.png',
+  Elon: '/Obama.png'
 }
 
 const handleSelect = (name) => {

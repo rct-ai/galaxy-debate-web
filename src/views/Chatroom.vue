@@ -15,7 +15,7 @@ const sendWs = `${import.meta.env.VITE_WS_URL}/send`
 
 const { status: messageWsStatus, data: wsMessage } = useWebSocket(messageWs, {
   autoReconnect: {
-    retries: 12,
+    retries: 3,
     delay: 5000,
     onFailed() {
       ElMessage.error('Failed to connect WebSocket, please reload the page.')
@@ -24,7 +24,7 @@ const { status: messageWsStatus, data: wsMessage } = useWebSocket(messageWs, {
 })
 const { status: sendWsStatus, send } = useWebSocket(sendWs, {
   autoReconnect: {
-    retries: 12,
+    retries: 3,
     delay: 5000,
     onFailed() {
       ElMessage.error('Failed to connect WebSocket, please reload the page.')
@@ -129,8 +129,8 @@ const handleWsMessage = (data) => {
 }
 
 const handleClickAvatar = (name) => {
-  president.visible = true
-  president.name = name
+  // president.visible = true
+  // president.name = name
 }
 
 watch(wsConnected, (value) => {
@@ -155,7 +155,7 @@ watch(wsMessage, (value) => {
 <template>
   <div class="flex flex-col h-screen">
     <div class="header">
-      <h1 class="title">Debate by AI Presidents</h1>
+      <h1 class="title">Galaxy Debate Room</h1>
     </div>
     <div class="w-[1216px] mx-auto flex-1 h-full flex justify-between pt-[30px]">
       <div class="w-[358px] h-full flex flex-col gap-[50px] pb-[38px]">
