@@ -1,5 +1,6 @@
 <script setup>
 import { computed, ref, watch } from 'vue'
+import { Keyboard } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import vbsButton from './vbs-button.vue'
 import svgIcon from './svg-icon.vue'
@@ -11,7 +12,7 @@ const TEXT_LOCATION_MAP = {
   1: 'top-left',
   2: 'top-right',
   3: 'bottom-right',
-  4: 'bottom-left',
+  4: 'bottom-left'
 }
 
 const props = defineProps({
@@ -60,10 +61,12 @@ const handleSlideButtonClick = (dir) => {
   }
 }
 
-watch(() => props.data, () => {
-  console.log(props.current)
-  swiperRef.value.slideTo(props.current - 1)
-})
+watch(
+  () => props.data,
+  () => {
+    swiperRef.value.slideTo(props.current - 1)
+  }
+)
 </script>
 
 <template>
@@ -74,8 +77,18 @@ watch(() => props.data, () => {
         :space-between="50"
         @slide-change="handleSlideChange"
         @swiper="(swiper) => (swiperRef = swiper)"
+        :modules="[Keyboard]"
+        :keyboard="{ enable: true }"
       >
-        <swiper-slide v-for="(slide, i) in storySlides">
+        <swiper-slide v-for="item in data">
+          <div class="single-image-slide">
+            <img class="item-image" :src="item.link" />
+            <div class="item-text">
+              {{ item.text }}
+            </div>
+          </div>
+        </swiper-slide>
+        <!-- <swiper-slide v-for="(slide, i) in storySlides">
           <div :class="['slide', `layout-${slide.layout}`]">
             <div v-for="item in slide.items" class="slide-item">
               <img class="item-image" :src="item.link" />
@@ -83,38 +96,43 @@ watch(() => props.data, () => {
                 {{ item.text }}
               </div>
             </div>
-            <div v-if="slide.items.length < 2" class="slide-item flex items-center justify-center">
+            <div
+              v-if="slide.items.length < 2"
+              class="slide-item flex items-center justify-center"
+            >
               To be continue...
             </div>
           </div>
-        </swiper-slide>
+        </swiper-slide> -->
       </swiper>
     </div>
-    <div class="soul-story-toolbar">
-      <vbs-button
-        size="toolbar"
-        clip="bl-clip"
-        :disabled="!currentSlideIndex"
-        @click="handleSlideButtonClick(-1)"
-      >
-        <svg-icon name="arrow/left" />
-        Prev
-      </vbs-button>
-      <div class="slide-indicator">
-        {{ currentSlideIndex + 1 }}/{{ storySlides.length }}
+    <div class="flex justify-center">
+      <div class="soul-story-toolbar">
+        <vbs-button
+          size="toolbar"
+          clip="bl-clip"
+          :disabled="!currentSlideIndex"
+          @click="handleSlideButtonClick(-1)"
+        >
+          <svg-icon name="arrow/left" />
+          Prev
+        </vbs-button>
+        <div class="slide-indicator">{{ currentSlideIndex + 1 }}/{{ data.length }}</div>
+        <vbs-button
+          size="toolbar"
+          clip="br-clip"
+          :disabled="currentSlideIndex >= data.length - 1"
+          @click="handleSlideButtonClick(1)"
+        >
+          <template v-if="currentSlideIndex >= data.length - 1">
+            To be continue
+          </template>
+          <template v-else>
+            Next
+            <svg-icon name="arrow/right" />
+          </template>
+        </vbs-button>
       </div>
-      <vbs-button
-        size="toolbar"
-        clip="br-clip"
-        :disabled="currentSlideIndex >= storySlides.length - 1"
-        @click="handleSlideButtonClick(1)"
-      >
-        <template v-if="currentSlideIndex >= storySlides.length - 1">To be continue</template>
-        <template v-else>
-          Next
-          <svg-icon name="arrow/right" />
-        </template>
-      </vbs-button>
     </div>
   </div>
 </template>
@@ -123,6 +141,24 @@ watch(() => props.data, () => {
 .soul-story {
   padding: 10px 20px 10px;
   @apply flex flex-col h-full;
+
+  .single-image-slide {
+    @apply flex flex-col items-center justify-center h-full;
+
+    .item-image {
+      object-fit: cover;
+      object-position: top;
+      aspect-ratio: 16 / 9;
+      width: 100%;
+    }
+    .item-text {
+      text-align: center;
+      padding-top: 8px;
+      font-size: 18px;
+      line-height: 1.5;
+      font-family: Patrickhand;
+    }
+  }
 
   &-content {
     position: relative;
@@ -261,6 +297,7 @@ watch(() => props.data, () => {
 
   &-toolbar {
     @apply flex justify-between items-center;
+    width: 400px;
     padding-top: 10px;
 
     .vbs-button {
