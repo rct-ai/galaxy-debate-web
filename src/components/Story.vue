@@ -83,7 +83,12 @@ watch(
       >
         <swiper-slide v-for="item in data">
           <div class="single-image-slide">
-            <img class="item-image swiper-lazy" :data-src="item.link" />
+            <img
+              class="item-image swiper-lazy"
+              :data-src="item.link"
+              src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+              alt=""
+            />
             <div class="item-text">
               {{ item.text }}
             </div>
@@ -151,6 +156,7 @@ watch(
       object-position: top;
       aspect-ratio: 16 / 9;
       width: 100%;
+      background-color: #202020;
     }
     .item-text {
       text-align: center;
