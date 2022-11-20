@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import Story from '@/components/Story.vue'
 
 const randomInt = (min, max) => Math.round(Math.random() * (max - min)) + min
@@ -46,9 +46,11 @@ const raw = [
   }
 ]
 raw.forEach((item) => (item.location = randomInt(1, 4)))
-setTimeout(() => {
-  data.value = raw
-}, 200)
+onMounted(() => {
+  setTimeout(() => {
+    data.value = raw
+  }, 200)
+})
 </script>
 
 <template>

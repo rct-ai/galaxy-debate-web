@@ -1,48 +1,32 @@
 export default [
   {
-    theme: 'Fighting the COVID-19',
+    theme: 'Artificial Intelligence',
     questions: [
-      'How will you lead in the next phase of the COVID-19 crisis?',
-      "What do you think there is to learn from China's experience in the fight against the new coronavirus?"
+      'What do you think about the development of artificial intelligence nowadays?',
+      'In your opinion, is AI smart enough for now?'
     ]
   },
   {
-    theme: 'Economy',
+    theme: 'Blockchain & Crypto',
     questions: [
-      'What is the fastest and most aggressive solution to save the unemployed from economic hardship?',
-      'How do you see the impact of blockchain on the U.S. economy?'
+      'Do you think the value of blockchain has been fully exploited?',
+      'What exactly is the value of Crypto?'
     ]
   },
   {
-    theme: 'Education',
+    theme: 'Metaverse',
     questions: [
-      'What does "family" mean to you?',
-      'What are your next steps for education reform?'
+      'What is the relationship between Metaverse and the game?',
+      'What would be the most important technology to implement the Metaverse?',
+      'In your opinion, which is the future, Web3 or Metaverse?'
     ]
   },
   {
-    theme: 'Internation Affairs',
+    theme: 'Startup and Entrepreneurship',
     questions: [
-      'What are your plans for the next step in U.S. foreign policy?',
-      'Does the U.S. need to increase economic sanctions against China?'
-    ]
-  },
-  {
-    theme: 'Immigration',
-    questions: ['What are your plans to reform the U.S. immigration policy?']
-  },
-  {
-    theme: 'Retirement System Reform',
-    questions: [
-      'What are your next steps for retirement system reform?',
-      'Would you consider reducing the percentage of citizens contributing to their pensions?'
-    ]
-  },
-  {
-    theme: 'Provoking Disputes',
-    questions: [
-      'Who do you think is the greatest president in American history?',
-      'Trump, in what areas do you think you are better than Biden?'
+      'In your opinion, would starting a business be an easy thing to do?',
+      'What are the 3 most important things in business management?',
+      'What kind of people do you think are qualified to be called your partners?'
     ]
   }
 ]

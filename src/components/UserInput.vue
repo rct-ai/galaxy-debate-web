@@ -24,25 +24,27 @@ const handleSend = async (value) => {
 <template>
   <el-tabs tab-position="left" v-loading="isLoading">
     <el-tab-pane v-for="item in questions" :label="item.theme" :key="item.theme">
-      <div
-        v-for="question in item.questions"
-        class="mb-[26px] mx-[35px] py-[15px] px-[20px] bg-black-top text-white flex gap-[20px] w-[430px] rounded-[7px] justify-between"
-      >
-        <div class="text-lg break-normal">{{ question }}</div>
-        <div class="flex flex-col-reverse pt-4">
-          <el-button
-            type="primary"
-            :disabled="disabled"
-            @click="handleSend(question)"
-            class="sendbutton"
-          >
-            Send
-          </el-button>
+      <div class="h-[340px]">
+        <div
+          v-for="question in item.questions"
+          class="mb-[26px] mx-[35px] py-[15px] px-[20px] bg-black-top text-white flex gap-[20px] w-[430px] rounded-[7px] justify-between"
+        >
+          <div class="text-lg break-normal">{{ question }}</div>
+          <div class="flex flex-col-reverse pt-4">
+            <el-button
+              type="primary"
+              :disabled="disabled"
+              @click="handleSend(question)"
+              class="sendbutton"
+            >
+              Send
+            </el-button>
+          </div>
         </div>
       </div>
     </el-tab-pane>
     <el-tab-pane label="Send other question">
-      <div class="mx-[35px] flex flex-col h-[320px]">
+      <div class="mx-[35px] flex flex-col h-[340px]">
         <el-input
           type="textarea"
           :disabled="disabled"

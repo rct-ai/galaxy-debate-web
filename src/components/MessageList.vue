@@ -2,9 +2,9 @@
 import { nextTick, ref, watch } from 'vue'
 
 const avatars = {
-  Richard: '/Biden.png',
-  Michael: '/Trump.png',
-  Elon: '/Obama.png'
+  Richard: '/Richard.png',
+  Michael: '/Michael.png',
+  Elon: '/Elon.png'
 }
 
 const emit = defineEmits(['clickAvatar'])
