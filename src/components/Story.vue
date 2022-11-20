@@ -1,6 +1,6 @@
 <script setup>
 import { computed, ref, watch } from 'vue'
-import { Keyboard } from 'swiper'
+import { Keyboard, Lazy } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import vbsButton from './vbs-button.vue'
 import svgIcon from './svg-icon.vue'
@@ -77,12 +77,13 @@ watch(
         :space-between="50"
         @slide-change="handleSlideChange"
         @swiper="(swiper) => (swiperRef = swiper)"
-        :modules="[Keyboard]"
+        :modules="[Keyboard, Lazy]"
+        :lazy="{ loadPrevNext: true }"
         :keyboard="{ enable: true }"
       >
         <swiper-slide v-for="item in data">
           <div class="single-image-slide">
-            <img class="item-image" :src="item.link" />
+            <img class="item-image swiper-lazy" :data-src="item.link" />
             <div class="item-text">
               {{ item.text }}
             </div>

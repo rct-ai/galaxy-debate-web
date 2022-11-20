@@ -48,11 +48,11 @@ const raw = [
 raw.forEach((item) => (item.location = randomInt(1, 4)))
 setTimeout(() => {
   data.value = raw
-}, 100)
+}, 200)
 </script>
 
 <template>
-  <div class="desktop">
+  <div class="desktop" v-loading="!data.length">
     <div class="relative">
       <div class="desktop__phone">
         <Story :data="data" :current="current" />
