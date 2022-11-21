@@ -64,7 +64,7 @@ const handleSlideButtonClick = (dir) => {
 watch(
   () => props.data,
   () => {
-    swiperRef.value.slideTo(props.current - 1)
+    swiperRef.value.slideTo(props.current)
   }
 )
 </script>
