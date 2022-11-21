@@ -5,16 +5,6 @@ import { Swiper, SwiperSlide } from 'swiper/vue'
 import vbsButton from './vbs-button.vue'
 import svgIcon from './svg-icon.vue'
 
-const SLIDE_ITEM_SIZE = 2
-const SLIDE_LAYOUT_LIST = ['two-row', 'two-row-skew-up', 'two-row-skew-down']
-
-const TEXT_LOCATION_MAP = {
-  1: 'top-left',
-  2: 'top-right',
-  3: 'bottom-right',
-  4: 'bottom-left'
-}
-
 const props = defineProps({
   data: {
     type: Array,
@@ -27,25 +17,7 @@ const props = defineProps({
 })
 
 const currentSlideIndex = ref(0)
-const storySlides = computed(() => {
-  const slides = []
-  props.data.map((item, i) => {
-    const newItem = {
-      ...item,
-      textLayout: TEXT_LOCATION_MAP[item.location]
-    }
-    const slideIndex = Math.floor(i / SLIDE_ITEM_SIZE)
-    let slide = slides[slideIndex]
-    if (!slide) {
-      slides[slideIndex] = slide = {
-        layout: SLIDE_LAYOUT_LIST[slideIndex % SLIDE_LAYOUT_LIST.length],
-        items: []
-      }
-    }
-    slide.items.push(newItem)
-  })
-  return slides
-})
+const startCount = computed(() => props.data[0]?.index || 0)
 
 const swiperRef = ref(null)
 
@@ -64,7 +36,23 @@ const handleSlideButtonClick = (dir) => {
 watch(
   () => props.current,
   () => {
-    swiperRef.value.slideTo(props.current)
+    swiperRef.value.slideTo(props.current - props.data[0]?.index, 0)
+  }
+)
+
+watch(
+  () => props.data,
+  (value, old) => {
+    if (value?.length !== old?.length) return
+
+    const diff = value[0]?.index - old[0]?.index || 0
+    if (diff > 0) {
+      if (diff < props.data.length) {
+        swiperRef.value.slideTo(currentSlideIndex.value - diff, 0)
+      } else {
+        swiperRef.value.slideTo(0, 0)
+      }
+    }
   }
 )
 </script>
@@ -81,7 +69,7 @@ watch(
         :lazy="{ loadPrevNext: true }"
         :keyboard="{ enable: true }"
       >
-        <swiper-slide v-for="item in data">
+        <swiper-slide v-for="item in data" :key="item.index">
           <div class="single-image-slide">
             <img
               class="item-image swiper-lazy"
@@ -94,22 +82,6 @@ watch(
             </div>
           </div>
         </swiper-slide>
-        <!-- <swiper-slide v-for="(slide, i) in storySlides">
-          <div :class="['slide', `layout-${slide.layout}`]">
-            <div v-for="item in slide.items" class="slide-item">
-              <img class="item-image" :src="item.link" />
-              <div :class="['item-text', `layout-${item.textLayout}`]">
-                {{ item.text }}
-              </div>
-            </div>
-            <div
-              v-if="slide.items.length < 2"
-              class="slide-item flex items-center justify-center"
-            >
-              To be continue...
-            </div>
-          </div>
-        </swiper-slide> -->
       </swiper>
     </div>
     <div class="flex justify-center">
@@ -123,7 +95,9 @@ watch(
           <svg-icon name="arrow/left" />
           Prev
         </vbs-button>
-        <div class="slide-indicator">{{ currentSlideIndex + 1 }}/{{ data.length }}</div>
+        <div class="slide-indicator">
+          {{ startCount + currentSlideIndex + 1 }}/{{ startCount + data.length }}
+        </div>
         <vbs-button
           size="toolbar"
           clip="br-clip"

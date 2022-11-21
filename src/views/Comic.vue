@@ -9,17 +9,16 @@ const data = ref([])
 const current = ref(0)
 
 const loopUpdate = () => {
-  setInterval(() => {
-    fetch(`${serverUrl}/comic`)
-      .then((r) => r.json())
-      .then((res) => {
-        data.value = res?.data?.panels || []
-      })
-      .catch((e) => {
-        console.error(e)
-        ElMessage(e?.message || 'UNKOWN ERROR')
-      })
-  }, 10000)
+  fetch(`${serverUrl}/comic`)
+    .then((r) => r.json())
+    .then((res) => {
+      data.value = res?.data?.panels || []
+      setTimeout(loopUpdate, 10000)
+    })
+    .catch((e) => {
+      console.error(e)
+      ElMessage(e?.message || 'UNKOWN ERROR')
+    })
 }
 
 onMounted(() => {
