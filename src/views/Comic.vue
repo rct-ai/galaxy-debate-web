@@ -1,55 +1,21 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import Story from '@/components/Story.vue'
+import { ElMessage } from 'element-plus';
 
-const randomInt = (min, max) => Math.round(Math.random() * (max - min)) + min
-const IMG_URL = 'http://iph.href.lu/640x480?fg=666666&bg=cccccc'
+const serverUrl = import.meta.env.VITE_HTTP_URL
 
-const current = 3
 const data = ref([])
-const raw = [
-  {
-    link: IMG_URL,
-    text: 'text'
-  },
-  {
-    link: IMG_URL,
-    text: 'text'
-  },
-  {
-    link: '/comic_example.jpg',
-    text: 'The gaming industry is growing rapidly and there are many opportunities for innovation. I believe that gaming can open the door to a metaverse, and that by exploring different dimensions within games, we can develop a better understanding of the world around us.'
-  },
-  {
-    link: IMG_URL,
-    text: 'text'
-  },
-  {
-    link: IMG_URL,
-    text: 'text'
-  },
-  {
-    link: IMG_URL,
-    text: 'text'
-  },
-  {
-    link: IMG_URL,
-    text: 'text'
-  },
-  {
-    link: IMG_URL,
-    text: 'text'
-  },
-  {
-    link: IMG_URL,
-    text: 'text'
-  }
-]
-raw.forEach((item) => (item.location = randomInt(1, 4)))
+const current = ref(0)
+
 onMounted(() => {
-  setTimeout(() => {
-    data.value = raw
-  }, 200)
+  fetch(`${serverUrl}/comic`).then(r => r.json()).then((res) => {
+    data.value = res?.data?.panels || []
+    current.value = res?.data?.currentIndex || 0
+  }).catch(e => {
+    console.error(e)
+    ElMessage(e?.message || 'UNKOWN ERROR')
+  })
 })
 </script>
 
