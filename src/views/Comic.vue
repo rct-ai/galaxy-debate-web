@@ -1,21 +1,39 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import Story from '@/components/Story.vue'
-import { ElMessage } from 'element-plus';
+import { ElMessage } from 'element-plus'
 
 const serverUrl = import.meta.env.VITE_HTTP_URL
 
 const data = ref([])
 const current = ref(0)
 
+const loopUpdate = () => {
+  setInterval(() => {
+    fetch(`${serverUrl}/comic`)
+      .then((r) => r.json())
+      .then((res) => {
+        data.value = res?.data?.panels || []
+      })
+      .catch((e) => {
+        console.error(e)
+        ElMessage(e?.message || 'UNKOWN ERROR')
+      })
+  }, 10000)
+}
+
 onMounted(() => {
-  fetch(`${serverUrl}/comic`).then(r => r.json()).then((res) => {
-    data.value = res?.data?.panels || []
-    current.value = res?.data?.currentIndex || 0
-  }).catch(e => {
-    console.error(e)
-    ElMessage(e?.message || 'UNKOWN ERROR')
-  })
+  fetch(`${serverUrl}/comic`)
+    .then((r) => r.json())
+    .then((res) => {
+      data.value = res?.data?.panels || []
+      current.value = res?.data?.currentIndex || 0
+      loopUpdate()
+    })
+    .catch((e) => {
+      console.error(e)
+      ElMessage(e?.message || 'UNKOWN ERROR')
+    })
 })
 </script>
 

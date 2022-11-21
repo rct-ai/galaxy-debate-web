@@ -62,7 +62,7 @@ const handleSlideButtonClick = (dir) => {
 }
 
 watch(
-  () => props.data,
+  () => props.current,
   () => {
     swiperRef.value.slideTo(props.current)
   }
